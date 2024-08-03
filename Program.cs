@@ -10,11 +10,24 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+var useSwagger = app.Configuration.GetValue<bool>("UseSwagger");
+var useDeveloperExceptionPage = app.Configuration.GetValue<bool>("UseDeveloperExceptionPage");
+
+if (useSwagger)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+if(useDeveloperExceptionPage)
+    app.UseDeveloperExceptionPage();
+else
+    app.UseExceptionHandler("/error");
+
+app.MapGet("/error/throw", () =>
+{
+    throw new NotImplementedException("test");
+});
+app.MapGet("/error", () => Results.Problem());
 
 app.UseHttpsRedirection();
 

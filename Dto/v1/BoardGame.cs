@@ -1,4 +1,4 @@
-namespace MyBGList;
+namespace MyBGList.Dto.v1;
 
 public class BoardGame
 {

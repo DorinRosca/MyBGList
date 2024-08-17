@@ -18,5 +18,9 @@ public class Domain
 
     [Required]
     public DateTime LastModifiedDate { get; set; }
+    [MaxLength(200)]
+    public string Notes { get; set; }
+    [Required]
+    public int Flags { get; set; }
     public ICollection<BoardGames_Domains>? BoardGames_Domains { get; set; }
 }

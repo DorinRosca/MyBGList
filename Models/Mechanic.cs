@@ -19,4 +19,10 @@ public class Mechanic
 
     [Required]
     public DateTime LastModifiedDate { get; set; }
+    
+    [MaxLength(200)]
+    public string Notes { get; set; }
+    
+    [Required]
+    public int Flags { get; set; }
     public ICollection<BoardGames_Mechanics>? BoardGames_Mechanics { get; set; }}

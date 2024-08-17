@@ -10,7 +10,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Mechanic> Mechanics => Set<Mechanic>();
     public DbSet<BoardGames_Domains> BoardGames_Domains => Set<BoardGames_Domains>();
     public DbSet<BoardGames_Mechanics> BoardGames_Mechanics => Set<BoardGames_Mechanics>();
-
+    public DbSet<Publisher> Publishers => Set<Publisher>();
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,6 +48,28 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasOne(o => o.Mechanic)
             .WithMany(m => m.BoardGames_Mechanics)
             .HasForeignKey(f => f.MechanicId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Publisher>()
+            .HasKey(p => new { p.Id });
+
+        modelBuilder.Entity<BoardGame>()
+            .HasKey(b => b.Id);
+
+        modelBuilder.Entity<BoardGame>()
+            .HasOne(b => b.Publisher)
+            .WithMany(m => m.BoardGames)
+            .HasForeignKey(f => f.PublisherId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<BoardGames_Categories>()
+            .HasKey(b => new { b.BoardGameId, b.CategoryId });
+        modelBuilder.Entity<BoardGames_Categories>()
+            .HasOne(o => o.BoardGame)
+            .WithMany(m => m.BoardGames_Categories)
+            .HasForeignKey(f => f.CategoryId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }

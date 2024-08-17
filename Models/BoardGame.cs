@@ -33,6 +33,16 @@ namespace MyBGList.Models
         [Required] public DateTime CreatedDate { get; set; }
 
         [Required] public DateTime LastModifiedDate { get; set; }
+        
+        [MaxLength(200)] public string AlternameNames { get; set; }
+        
+        [MaxLength(200)] public string Designer { get; set; }
+        [Required] public int Flags { get; set; }
+        
+        [Required] public int PublisherId { get; set; }
+        
+        public Publisher Publisher { get; set; }
+        public ICollection<BoardGames_Categories>? BoardGames_Categories { get; set; }
         public ICollection<BoardGames_Domains>? BoardGames_Domains { get; set; }
         public ICollection<BoardGames_Mechanics>? BoardGames_Mechanics { get; set; }
     }
